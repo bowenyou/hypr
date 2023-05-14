@@ -1,0 +1,35 @@
+#! /bin/bash
+
+get() {
+  max=$(brightnessctl m)
+  current=$(brightnessctl g)
+  echo $(($current*100/$max))
+}
+
+notify() {
+  notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Brightness : $(get)"
+}
+
+increase() {
+  brightnessctl set 5%+ && notify
+}
+
+decrease() {
+  brightnessctl set 5%- 5 && notify
+}
+
+brightness_set() {
+  brightnessctl set "$1%" 
+}
+
+if [[ "$1" == "--get" ]]; then
+  get
+elif [[ "$1" == "--inc" ]]; then
+  increase
+elif [[ "$1" == "--dec" ]]; then
+  decrease
+elif [[ "$1" == "--set" ]]; then
+  brightness_set $2
+else
+  get
+fi

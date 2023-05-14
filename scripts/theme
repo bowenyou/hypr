@@ -1,0 +1,14 @@
+#! /bin/bash 
+
+THEME="Tokyonight-Dark-BL"
+ICON_THEME="Tokyonight-Dark"
+
+
+apply() {
+  gsettings set org.gnome.desktop.interface gtk-theme "$THEME"
+  gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME"
+  gsettings set org.gnome.desktop.interface cursor-theme "$THEME"
+  gsettings set org.gnome.desktop.interface font-name "SauceCodePro Nerd Font"
+}
+
+apply

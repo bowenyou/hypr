@@ -1,0 +1,38 @@
+#! /bin/bash
+
+get() {
+  volume=$(pamixer --default-source --get-volume)
+  echo "$volume"
+}
+
+notify() {
+  notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Microphone : $(get)"
+}
+
+increase() {
+  pamixer --default-source -i 5 && notify
+}
+
+decrease() {
+  pamixer --default-source -d 5 && notify
+}
+
+toggle_mute() {
+  if [ "$(pamixer --get-mute)" == "false" ]; then
+    pamixer --default-source -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Microphone : MUTED"
+  elif [ "$(pamixer --get-mute)" == "true" ]; then
+    pamixer --default-source -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Microphone : UNMUTED"
+  fi
+}
+
+if [[ "$1" == "--get" ]]; then
+  get
+elif [[ "$1" == "--inc" ]]; then
+  increase
+elif [[ "$1" == "--dec" ]]; then
+  decrease
+elif [[ "$1" == "--toggle" ]]; then
+  toggle_mute
+else
+  get
+fi

@@ -1,0 +1,5 @@
+#! /bin/bash
+
+~/.config/hypr/scripts/theme &
+hyprpaper &
+~/.config/eww/scripts/open.sh &
